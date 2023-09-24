@@ -26,7 +26,7 @@ archives:
 
 brews:
   - name: jisyo
-    tap:
+    repository:
       owner: arrow2nd
       name: homebrew-tap
       token: "{{ .Env.GORELEASER_GITHUB_TOKEN }}"
@@ -40,15 +40,15 @@ brews:
     install: |
       bin.install "jisyo"
 
-scoop:
-  bucket:
-    owner: arrow2nd
-    name: scoop-bucket
-    token: "{{ .Env.GORELEASER_GITHUB_TOKEN }}"
-  url_template: "https://github.com/arrow2nd/jisyo/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-  homepage: "https://arrow2nd.com/works/jisyo"
-  description: "📚 SKK辞書マネージャ"
-  license: "MIT"
+scoops:
+  - bucket:
+      owner: arrow2nd
+      name: scoop-bucket
+      token: "{{ .Env.GORELEASER_GITHUB_TOKEN }}"
+    url_template: "https://github.com/arrow2nd/jisyo/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    homepage: "https://arrow2nd.com/works/jisyo"
+    description: "📚 SKK辞書マネージャ"
+    license: "MIT"
 
 checksum:
   name_template: "checksums.txt"
