@@ -25,7 +25,7 @@ func addCommand() *cli.Command {
 			return nil
 		},
 		Action: func(ctx *cli.Context) error {
-			url := ctx.Args().First()
+			url := strings.TrimSpace(ctx.Args().First())
 
 			// 重複確認
 			dupIndex := -1
@@ -44,6 +44,7 @@ func addCommand() *cli.Command {
 			}
 
 			fmt.Println("🚚 ダウンロードを開始します")
+			fmt.Printf("📦 %s\n", url)
 
 			newJisyo, exit := downloadJisyo(url)
 			if exit != nil {
