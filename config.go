@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -88,16 +87,16 @@ func loadConfig(ctx *cli.Context) (*config, cli.ExitCoder) {
 }
 
 func saveConfig(ctx *cli.Context, in config) cli.ExitCoder {
-	buf := &bytes.Buffer{}
+	bytes, err := json.MarshalIndent(in, "", "  ")
 
-	if err := json.NewEncoder(buf).Encode(in); err != nil {
+	if err != nil {
 		msg := fmt.Errorf("設定ファイルの解析に失敗しました: %w", err)
 		return cli.Exit(msg, exitCodeErrConfig.ToInt())
 	}
 
 	path := ctx.String("config")
 
-	if err := os.WriteFile(path, buf.Bytes(), os.ModePerm); err != nil {
+	if err := os.WriteFile(path, bytes, os.ModePerm); err != nil {
 		msg := fmt.Errorf("設定ファイルの書き込みに失敗しました: %w", err)
 		return cli.Exit(msg, exitCodeErrWrite.ToInt())
 	}
