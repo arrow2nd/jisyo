@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -29,6 +30,7 @@ func removeCommand() *cli.Command {
 				fmt.Println("🧹 削除を開始します")
 
 				newJisyos := []jisyo{}
+				removeJisyoName = strings.TrimSpace(removeJisyoName)
 
 				for _, jisyo := range sharedConfig.Jisyos {
 					if jisyo.Name != removeJisyoName {
