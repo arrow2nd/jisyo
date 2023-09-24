@@ -25,7 +25,7 @@ func initCommand() *cli.Command {
 				}
 
 				if err := survey.AskOne(prompt, &do); err != nil || !do {
-					return nil
+					return exitCancel()
 				}
 			}
 
@@ -33,12 +33,14 @@ func initCommand() *cli.Command {
 			prompt := &survey.Input{Message: "辞書の保存先"}
 			dirPath := ""
 			if err := survey.AskOne(prompt, &dirPath, survey.WithValidator(survey.Required)); err != nil {
-				return nil // キャンセル
+				return exitCancel()
 			}
 
 			newConfig := config{
 				DirPath: dirPath,
 			}
+
+			showSuccess()
 
 			return saveConfig(ctx, newConfig)
 		},

@@ -31,7 +31,7 @@ func downloadCommand() *cli.Command {
 				}
 			}
 
-			fmt.Println("✨ 完了しました")
+			showSuccess()
 
 			return nil
 		},

@@ -59,7 +59,7 @@ func removeCommand() *cli.Command {
 				sharedConfig.Jisyos = newJisyos
 			}
 
-			fmt.Println("✨ 完了しました")
+			showSuccess()
 
 			return saveConfig(ctx, *sharedConfig)
 		},

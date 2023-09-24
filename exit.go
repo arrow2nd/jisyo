@@ -1,5 +1,7 @@
 package main
 
+import "github.com/urfave/cli/v2"
+
 type exitCode int
 
 func (e exitCode) ToInt() int {
@@ -26,3 +28,7 @@ const (
 	// exitCodeErrArg : 引数エラー
 	exitCodeErrArg
 )
+
+func exitCancel() cli.ExitCoder {
+	return cli.Exit("🚫 キャンセルしました", exitCodeErr.ToInt())
+}

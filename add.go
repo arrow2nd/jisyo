@@ -35,7 +35,7 @@ func addCommand() *cli.Command {
 					prompt := &survey.Confirm{Message: "この辞書は既に追加されています。上書きしますか？", Default: false}
 
 					if err := survey.AskOne(prompt, &do); err != nil || !do {
-						return cli.Exit("キャンセルしました", exitCodeErr.ToInt())
+						return exitCancel()
 					}
 
 					dupIndex = i
@@ -57,7 +57,7 @@ func addCommand() *cli.Command {
 				sharedConfig.Jisyos[dupIndex] = *newJisyo
 			}
 
-			fmt.Println("✨ 完了しました")
+			showSuccess()
 
 			return saveConfig(ctx, *sharedConfig)
 		},

@@ -22,8 +22,7 @@ func listCommand() *cli.Command {
 
 			temp := `{{range $i, $j := .Jisyos -}}
 {{inc $i}}. {{.Name}}
-  - URL   : {{.URL}}
-  - SHA256: {{.SHA256}}
+  - URL: {{.URL}}
 {{end -}}`
 
 			t, err := template.New("list").Funcs(funcMap).Parse(temp)

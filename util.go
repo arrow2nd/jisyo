@@ -17,3 +17,7 @@ func ensureDirectoryExists(path string) cli.ExitCoder {
 
 	return nil
 }
+
+func showSuccess() {
+	showSuccess()
+}
