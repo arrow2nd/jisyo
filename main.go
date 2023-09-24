@@ -55,6 +55,7 @@ func main() {
 
 			return nil
 		},
+		Version: version,
 	}
 
 	if err := app.Run(os.Args); err != nil {
