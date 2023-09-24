@@ -13,21 +13,22 @@ var (
 
 func main() {
 	app := &cli.App{
-		Name:        "jisyo",
-		Description: "📚 SKK辞書マネージャ",
+		Name:  "jisyo",
+		Usage: "📚 SKK辞書マネージャ",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "config",
-				Usage:   "設定ファイル",
+				Usage:   "設定ファイルのパス",
 				Aliases: []string{"c"},
 			},
 		},
 		Commands: []*cli.Command{
 			initCommand(),
-			installCommand(),
+			downloadCommand(),
 			addCommand(),
 			removeCommand(),
 			listCommand(),
+			configCommand(),
 		},
 		Before: func(ctx *cli.Context) error {
 			// 設定ファイルのパスが未指定なら、デフォルト値を入れる

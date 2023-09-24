@@ -19,4 +19,10 @@ const (
 	exitCodeErrWrite
 	// exitCodeErrTemplate : テンプレートエラー
 	exitCodeErrTemplate
+	// exitCodeErrNetwork : ネットワークエラー
+	exitCodeErrNetwork
+	// exitCodeErrExtract : 展開エラー
+	exitCodeErrExtract
+	// exitCodeErrArg : 引数エラー
+	exitCodeErrArg
 )

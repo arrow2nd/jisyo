@@ -12,6 +12,7 @@ func initCommand() *cli.Command {
 		Name:        "init",
 		Usage:       "設定ファイルを初期化",
 		Description: "既に存在している場合、上書きされます",
+		Aliases:     []string{"i"},
 		Action: func(ctx *cli.Context) error {
 			path := ctx.String("config")
 

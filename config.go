@@ -5,14 +5,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/urfave/cli/v2"
 )
 
 type jisyo struct {
-	URL    string `json:"url"`
-	SHA256 string `json:"sha256"`
+	Name string `json:"name"`
+	URL  string `json:"url"`
 }
 
 type config struct {
@@ -21,6 +22,35 @@ type config struct {
 }
 
 const configFileName = "jisyo.json"
+
+func configCommand() *cli.Command {
+	return &cli.Command{
+		Name:    "config",
+		Aliases: []string{"c"},
+		Usage:   "設定ファイルをエディタで開く",
+		Action: func(ctx *cli.Context) error {
+			editor := ctx.String("editor")
+			configPath := ctx.String("config")
+			cmd := exec.Command(editor, configPath)
+			cmd.Stdin = os.Stdin
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			if err := cmd.Run(); err != nil {
+				msg := fmt.Errorf("エディタの起動に失敗しました: %w", err)
+				return cli.Exit(msg, exitCodeErr.ToInt())
+			}
+			return nil
+		},
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:    "editor",
+				Usage:   "エディタ",
+				Value:   os.Getenv("EDITOR"),
+				Aliases: []string{"e"},
+			},
+		},
+	}
+}
 
 func defaultConfigPath() (string, cli.ExitCoder) {
 	homeDir, err := os.UserHomeDir()
@@ -32,11 +62,8 @@ func defaultConfigPath() (string, cli.ExitCoder) {
 	configDir := filepath.Join(homeDir, ".config", "jisyo")
 
 	// ディレクトリが無いなら作成
-	if _, err := os.Stat(configDir); err != nil {
-		if err := os.MkdirAll(configDir, os.ModePerm); err != nil {
-			msg := fmt.Errorf("設定ディレクトリが作成できませんでした: %w", err)
-			return "", cli.Exit(msg, exitCodeErrWrite.ToInt())
-		}
+	if exit := ensureDirectoryExists(configDir); exit != nil {
+		return "", exit
 	}
 
 	return filepath.Join(configDir, configFileName), nil
