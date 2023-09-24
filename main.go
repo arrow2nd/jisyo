@@ -50,7 +50,13 @@ func main() {
 			if cfg, exit := loadConfig(ctx); exit != nil {
 				return exit
 			} else {
+				dirPath, exit := expandTilde(cfg.DirPath)
+				if exit != nil {
+					return exit
+				}
+
 				sharedConfig = cfg
+				sharedConfig.DirPath = dirPath
 			}
 
 			return nil
