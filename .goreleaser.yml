@@ -41,7 +41,7 @@ brews:
       bin.install "jisyo"
 
 scoops:
-  - bucket:
+  - repository:
       owner: arrow2nd
       name: scoop-bucket
       token: "{{ .Env.GORELEASER_GITHUB_TOKEN }}"
