@@ -15,7 +15,7 @@ import (
 
 func downloadCommand() *cli.Command {
 	return &cli.Command{
-		Name:        "downlaod",
+		Name:        "download",
 		Aliases:     []string{"d"},
 		Usage:       "辞書をダウンロード",
 		Description: "登録済みの辞書を指定のディレクトリに一括でダウンロードします",
