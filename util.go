@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -18,6 +19,20 @@ func ensureDirectoryExists(path string) cli.ExitCoder {
 	return nil
 }
 
+func expandTilde(path string) (string, cli.ExitCoder) {
+	if strings.HasPrefix(path, "~") {
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			msg := fmt.Errorf("ホームディレクトリの取得に失敗しました: %w", err)
+			return "", cli.Exit(msg, exitCodeErrRead.ToInt())
+		}
+
+		return strings.Replace(path, "~", homeDir, 1), nil
+	}
+
+	return path, nil
+}
+
 func showSuccess() {
-	showSuccess()
+	fmt.Println("✨ 完了しました")
 }

@@ -11,7 +11,7 @@ builds:
       - darwin
     ldflags:
       - -s -w
-      - -X github.com/arrow2nd/jisyo/main.version={{.Version}}
+      - -X main.version={{.Version}}
 
 archives:
   - name_template: >-

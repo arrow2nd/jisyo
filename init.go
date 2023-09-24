@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/urfave/cli/v2"
@@ -37,7 +38,7 @@ func initCommand() *cli.Command {
 			}
 
 			newConfig := config{
-				DirPath: dirPath,
+				DirPath: strings.TrimSpace(dirPath),
 			}
 
 			showSuccess()
