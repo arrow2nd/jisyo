@@ -19,5 +19,5 @@ func ensureDirectoryExists(path string) cli.ExitCoder {
 }
 
 func showSuccess() {
-	showSuccess()
+	fmt.Println("✨ 完了しました")
 }
