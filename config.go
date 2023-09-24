@@ -20,6 +20,15 @@ type config struct {
 	Jisyos  []jisyo `json:"jisyos"`
 }
 
+func (c *config) GetDirPath() (string, cli.ExitCoder) {
+	dirPath, exit := expandTilde(c.DirPath)
+	if exit != nil {
+		return "", exit
+	}
+
+	return dirPath, nil
+}
+
 const configFileName = "jisyo.json"
 
 func configCommand() *cli.Command {

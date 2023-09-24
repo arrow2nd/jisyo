@@ -40,7 +40,12 @@ func removeCommand() *cli.Command {
 
 					fmt.Printf("[%d/%d] 🗑 %s (%s)\n", i+1, removeJisyos, jisyo.Name, jisyo.URL)
 
-					path := filepath.Join(sharedConfig.DirPath, jisyo.Name)
+					jisyoDir, exit := sharedConfig.GetDirPath()
+					if exit != nil {
+						return exit
+					}
+
+					path := filepath.Join(jisyoDir, jisyo.Name)
 
 					// ファイルがなければ削除処理は実行しない
 					if _, err := os.Stat(path); err != nil {

@@ -46,9 +46,14 @@ func downloadJisyo(downloadUrl string) (*jisyo, cli.ExitCoder) {
 	}
 	defer res.Body.Close()
 
+	jisyoDir, exit := sharedConfig.GetDirPath()
+	if exit != nil {
+		return nil, exit
+	}
+
 	// 展開
 	rawFilename := filepath.Base(res.Request.URL.Path)
-	filename, err := extract(res.Body, rawFilename, sharedConfig.DirPath)
+	filename, err := extract(res.Body, rawFilename, jisyoDir)
 	if err != nil {
 		msg := fmt.Errorf("展開に失敗しました: %w", err)
 		return nil, cli.Exit(msg, exitCodeErrExtract.ToInt())
